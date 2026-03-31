@@ -1,8 +1,8 @@
 # WalletConnect Pay + Turnkey Demo
 
-A React Native mobile wallet demo that integrates [WalletConnect Pay](https://docs.walletconnect.com/payments/wallets/standalone/react-native) with [Turnkey](https://turnkey.com) embedded wallets for gasless USDC payments on Base.
+A React Native mobile wallet demo that integrates [WalletConnect Pay](https://docs.walletconnect.com/payments/wallets/standalone/react-native) with [Turnkey](https://turnkey.com) wallets and transaction management for transaction construction, signing, gas sponsorship, and broadcast.
 
-This demo showcases a mobile payment flow where users authenticate via email OTP, create a Turnkey-managed embedded wallet, scan a merchant QR code, and pay with USDC on Base — with gas fees fully sponsored by Turnkey. The wallet never holds or spends native ETH for gas.
+This demo showcases a mobile payment flow where users authenticate via email OTP, create a Turnkey-secured wallet, scan a merchant QR code, and pay with USDC on Base — with gas fees fully sponsored by Turnkey. The wallet never holds or spends native ETH for gas.
 
 ## Demo
 
@@ -12,7 +12,7 @@ This demo showcases a mobile payment flow where users authenticate via email OTP
 ## Features
 
 - **Email OTP authentication** via Turnkey Auth Proxy
-- **Turnkey embedded wallet** — non-custodial, secure enclave key management
+- **Turnkey embedded wallet** — non-custodial, keys managed via secure enclave
 - **WalletConnect Pay merchant payment flow** — QR scan, confirm, pay
 - **Gasless USDC transfers** on Base via Turnkey sponsored transactions
 - **Real on-chain ERC-20 transfers** with transaction hash confirmation
