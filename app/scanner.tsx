@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -7,7 +7,7 @@ import {
   Alert,
   TextInput,
 } from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useRouter } from "expo-router";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { Colors } from "@/constants/theme";
 
@@ -15,23 +15,18 @@ const colors = Colors.dark;
 
 export default function ScannerScreen() {
   const router = useRouter();
-  const { usdcBalance } = useLocalSearchParams<{ usdcBalance?: string }>();
 
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
   const [manualLink, setManualLink] = useState("");
-  const [amount, setAmount] = useState("5.00");
 
-  // Handle scanned barcode
   const handleBarcodeScanned = ({ data }: { data: string }) => {
     if (scanned) return;
 
-    // WC Pay links look like: https://pay.walletconnect.com/pay_xxxxx
     if (data.includes("pay.walletconnect.com") || data.startsWith("https://")) {
       setScanned(true);
       navigateToPayment(data);
     } else {
-      // Might be a raw payment ID or other format
       Alert.alert(
         "Invalid QR Code",
         "This doesn't look like a WalletConnect Pay QR code. Try again.",
@@ -43,11 +38,7 @@ export default function ScannerScreen() {
   const navigateToPayment = (paymentLink: string) => {
     router.replace({
       pathname: "/payment",
-      params: {
-        paymentLink,
-        amount: amount || "5.00",
-        ...(usdcBalance ? { usdcBalance } : {}),
-      },
+      params: { paymentLink },
     });
   };
 
@@ -96,27 +87,7 @@ export default function ScannerScreen() {
             <Text
               style={[styles.manualLabel, { color: colors.secondaryText }]}
             >
-              Amount (USDC):
-            </Text>
-            <TextInput
-              style={[
-                styles.manualInput,
-                {
-                  borderColor: colors.inputBorder,
-                  color: colors.primaryText,
-                  backgroundColor: "#1E1F20",
-                },
-              ]}
-              placeholder="5.00"
-              placeholderTextColor={colors.secondaryText}
-              value={amount}
-              onChangeText={setAmount}
-              keyboardType="decimal-pad"
-            />
-            <Text
-              style={[styles.manualLabel, { color: colors.secondaryText, marginTop: 8 }]}
-            >
-              Or paste a payment link:
+              Paste a payment link:
             </Text>
             <TextInput
               style={[
@@ -179,26 +150,6 @@ export default function ScannerScreen() {
       <View
         style={[styles.bottomBar, { backgroundColor: colors.background }]}
       >
-        <View style={styles.bottomRow}>
-          <Text style={[styles.bottomLabel, { color: colors.secondaryText }]}>
-            Amount (USDC):
-          </Text>
-          <TextInput
-            style={[
-              styles.bottomAmountInput,
-              {
-                borderColor: colors.inputBorder,
-                color: colors.primaryText,
-                backgroundColor: "#1E1F20",
-              },
-            ]}
-            placeholder="5.00"
-            placeholderTextColor={colors.secondaryText}
-            value={amount}
-            onChangeText={setAmount}
-            keyboardType="decimal-pad"
-          />
-        </View>
         <View style={styles.bottomRow}>
           <TextInput
             style={[
@@ -358,19 +309,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-  },
-  bottomLabel: {
-    fontSize: 13,
-    fontWeight: "500",
-  },
-  bottomAmountInput: {
-    width: 80,
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 14,
-    textAlign: "center",
   },
   bottomInput: {
     flex: 1,

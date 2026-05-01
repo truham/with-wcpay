@@ -109,7 +109,7 @@ export default function HomeScreen() {
       Alert.alert("No Wallet", "Please create a wallet first.");
       return;
     }
-    router.push({ pathname: "/scanner", params: { usdcBalance } });
+    router.push({ pathname: "/scanner" });
   };
 
   const handleCopyAddress = () => {
