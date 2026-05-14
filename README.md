@@ -6,6 +6,8 @@ This repository features a mobile wallet demo powered by Turnkey that integrates
 
 With Turnkey, the wallet handles authentication and EIP-712 signing — WalletConnect Pay handles everything else: transaction construction, gas sponsorship (via 7702 paymaster), and on-chain broadcast. The wallet never holds or spends native ETH for gas.
 
+Each end-user's wallet is fully self-custodial: Turnkey creates a dedicated sub-organization per user with a 1-of-1 root quorum, meaning only the authenticated user can authorize signing. The parent organization cannot access sub-organization private keys. Turnkey acts as the secure wallet infrastructure — key generation and signing happen within Turnkey's secure enclaves, but control belongs entirely to the end-user.
+
 ## Demo
 
 <div align="center">
@@ -55,6 +57,19 @@ The payment screen orchestrates the full flow — fetching options, identity ver
 https://github.com/MarkoKey/with-wcpay/blob/1c3fbdbfe59309aa41b984017b34316749c1d662/app/payment.tsx#L112-L130
 
 ## How it works
+
+```
+User ──▶ Email OTP ──▶ Turnkey creates sub-org + ETH wallet
+  │
+  ▼
+Scan WC Pay QR ──▶ Fetch payment options from WC Pay
+  │
+  ▼
+Confirm payment ──▶ Identity verification (if required)
+  │
+  ▼
+Turnkey signs EIP-712 ──▶ WC Pay broadcasts via 7702 paymaster ──▶ ✅ On-chain
+```
 
 1. User authenticates via email OTP — Turnkey creates a sub-organization with an Ethereum wallet
 2. User scans a WalletConnect Pay QR code (or enters a payment link manually)
