@@ -6,7 +6,13 @@ This repository features a mobile wallet demo powered by Turnkey that integrates
 
 With Turnkey, the wallet handles authentication and EIP-712 signing — WalletConnect Pay handles everything else: transaction construction, gas sponsorship (via 7702 paymaster), and on-chain broadcast. The wallet never holds or spends native ETH for gas.
 
+## Demo
+
+<div align="center">
+
 https://github.com/user-attachments/assets/01af3375-9bd8-4063-851b-0a90e84a0e70
+
+</div>
 
 ## Getting started
 
