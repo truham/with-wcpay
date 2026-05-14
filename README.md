@@ -6,8 +6,7 @@ Users authenticate via email OTP, create a Turnkey-secured wallet, scan a mercha
 
 ## Demo
 
-<!-- Replace with your screen recording -->
-> Video demo coming soon
+<video src="assets/WCPay Turnkey Demo.mp4" width="300" autoplay loop muted></video>
 
 ## Features
 
