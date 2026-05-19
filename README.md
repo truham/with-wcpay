@@ -18,18 +18,35 @@ https://github.com/user-attachments/assets/01af3375-9bd8-4063-851b-0a90e84a0e70
 
 ## Getting started
 
-Make sure you have Node.js installed locally; we recommend using Node v16+.
+Make sure you have Node.js installed locally; we recommend using Node v20+.
 
 ```bash
-$ node --version # v16+
+$ node --version # v20+
 $ git clone https://github.com/MarkoKey/with-wcpay.git
 $ cd with-wcpay/
 $ cp .env.example .env
 # Fill in your Turnkey and WalletConnect credentials in .env
 $ npm install
 $ npx expo prebuild --platform ios
+```
+
+**Option 1 — CLI:**
+
+```bash
 $ npx expo run:ios
 ```
+
+**Option 2 — Xcode:**
+
+```bash
+# In one terminal — start the Metro bundler
+$ npx expo start
+
+# In another terminal (or double-click the file)
+$ open ios/WCPayTurnkeyDemo.xcworkspace
+```
+
+Then in Xcode: select a simulator from the device picker (e.g., iPhone 17 Pro) and press **⌘R**.
 
 To configure the demo wallet you'll need the following:
 
@@ -37,7 +54,7 @@ To configure the demo wallet you'll need the following:
 |---|---|
 | `EXPO_PUBLIC_TURNKEY_ORGANIZATION_ID` | Your Turnkey organization ID from the [Turnkey Dashboard](https://app.turnkey.com) |
 | `EXPO_PUBLIC_TURNKEY_API_BASE_URL` | Turnkey API base URL (default: `https://api.turnkey.com`) |
-| `EXPO_PUBLIC_TURNKEY_AUTH_PROXY_CONFIG_ID` | Auth Proxy configuration ID for email OTP |
+| `EXPO_PUBLIC_TURNKEY_AUTH_PROXY_CONFIG_ID` | Auth Proxy configuration ID for email OTP — find it in the [Turnkey WalletKit Dashboard](https://app.turnkey.com/dashboard/walletKit) |
 | `EXPO_PUBLIC_TURNKEY_RPID` | Relying Party ID for passkey domain |
 | `EXPO_PUBLIC_APP_SCHEME` | Deep link scheme for the app (default: `wcpaydemo`) |
 | `EXPO_PUBLIC_WC_API_KEY` | WalletConnect Pay API key from the [WalletConnect Dashboard](https://cloud.walletconnect.com/) |
