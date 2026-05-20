@@ -71,9 +71,8 @@ export default function PaymentScreen() {
       setPaymentOptions(response.options || []);
       setPaymentId(response.paymentId);
 
-      if (response.options?.length > 0) {
-        setSelectedOption(response.options[0]);
-      }
+      const firstOption = response.options?.[0] ?? null;
+      setSelectedOption(firstOption);
 
       setStep("options");
     } catch (error: any) {
@@ -84,7 +83,12 @@ export default function PaymentScreen() {
   };
 
   const handleConfirmPayment = async () => {
-    if (!selectedOption || !paymentId || !ethAccount || !signMessage) return;
+    if (!paymentId || !ethAccount || !signMessage) return;
+    if (!selectedOption) {
+      setStep("failed");
+      setErrorMessage("Insufficient USDC balance to complete this payment. Please add funds to your wallet and try again.");
+      return;
+    }
 
     // If identity collection is required, show the WebView first
     if (selectedOption.collectData?.url) {
@@ -134,12 +138,22 @@ export default function PaymentScreen() {
         signatures,
       });
 
+      const status = result?.status?.toUpperCase();
+      if (status && (status === "FAILED" || status === "REJECTED" || status === "ERROR")) {
+        throw new Error(result.message || result.error || `Payment failed with status: ${result.status}`);
+      }
+
       setPaymentResult(result);
       setStep("success");
     } catch (error: any) {
       console.error("[WCPay] Payment failed:", error);
       setStep("failed");
-      setErrorMessage(error.message || "Payment failed. Please try again.");
+      const msg: string = error.message || "";
+      if (/insufficient|balance|funds/i.test(msg)) {
+        setErrorMessage("Insufficient USDC balance. Please add funds to your wallet and try again.");
+      } else {
+        setErrorMessage(msg || "Payment failed. Please try again.");
+      }
     }
   };
 
