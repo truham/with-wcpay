@@ -23,7 +23,7 @@ export default function ScannerScreen() {
   const handleBarcodeScanned = ({ data }: { data: string }) => {
     if (scanned) return;
 
-    if (data.includes("pay.walletconnect.com") || data.startsWith("https://")) {
+    if (data.includes("pay.walletconnect.com")) {
       setScanned(true);
       navigateToPayment(data);
     } else {

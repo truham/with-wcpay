@@ -132,8 +132,9 @@ function assembleSignature(result: any): string {
   s = s.padStart(64, "0");
 
   // Normalize v (yParity) to recovery id
+  if (!v) throw new Error("Turnkey returned empty v value in signature");
   let vNum: number;
-  if (v === "00" || v === "0" || v === "") {
+  if (v === "00" || v === "0") {
     vNum = 27;
   } else if (v === "01" || v === "1") {
     vNum = 28;
